@@ -2,9 +2,7 @@
 
 # Getting started
 
-A collection of example scripts for working with ERC-4337.
-
-For an overview on ERC-4337 and account abstraction, see our docs [here](https://docs.stackup.sh/).
+A collection of example scripts for working with ERC-4337. For an overview on the EIP and account abstraction, see our docs [here](https://docs.stackup.sh/).
 
 All scripts in this repository is built using [@account-abstraction/sdk](https://www.npmjs.com/package/@account-abstraction/sdk). The implementation of all the following commands are located in the [scripts directory](./scripts/).
 
@@ -24,7 +22,7 @@ yarn install
 
 ## Init config
 
-These configs will be used in the commands below.
+These config values will be used for all documented [commands](#commands).
 
 ```bash
 yarn run init
