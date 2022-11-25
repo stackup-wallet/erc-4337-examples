@@ -58,7 +58,7 @@ This is address of the singleton EntryPoint contract. It is the same on all netw
 
 **Default value is set to `0xE6aFCD2B4e085F44596b925E401DeA5bB544399A`.**
 
-This is factory address for deploying [SimpleWallet.sol]. It is the same on all networks and allows us to generate deterministic addresses.
+This is factory address for deploying [SimpleWallet.sol](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/samples/SimpleWallet.sol). It is the same on all networks and allows us to generate deterministic addresses.
 
 # Commands
 
