@@ -1,21 +1,17 @@
-import { SimpleWalletAPI } from "@account-abstraction/sdk";
+import { getSimpleWallet } from "../../src";
 import { ethers } from "ethers";
 // @ts-ignore
 import config from "../../config.json";
 
 async function main() {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
-  const owner = new ethers.Wallet(config.signingKey, provider);
-  const entryPointAddress = config.entryPoint;
-  const factoryAddress = config.simpleWalletFactory;
-
-  const walletAPI = new SimpleWalletAPI({
+  const walletAPI = getSimpleWallet(
     provider,
-    entryPointAddress,
-    owner,
-    factoryAddress,
-  });
-  const address = await walletAPI.getCreate2Address();
+    config.signingKey,
+    config.entryPoint,
+    config.simpleWalletFactory
+  );
+  const address = await walletAPI.getCounterFactualAddress();
 
   console.log(`SimpleWallet address: ${address}`);
 }

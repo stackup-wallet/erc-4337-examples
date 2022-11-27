@@ -1,0 +1,13 @@
+diff --git a/node_modules/@account-abstraction/sdk/dist/src/calcPreVerificationGas.js b/node_modules/@account-abstraction/sdk/dist/src/calcPreVerificationGas.js
+index 77563fc..1067d40 100644
+--- a/node_modules/@account-abstraction/sdk/dist/src/calcPreVerificationGas.js
++++ b/node_modules/@account-abstraction/sdk/dist/src/calcPreVerificationGas.js
+@@ -23,7 +23,7 @@ function calcPreVerificationGas(userOp, overheads) {
+     const p = Object.assign({ 
+         // dummy values, in case the UserOp is incomplete.
+         preVerificationGas: 21000, signature: (0, utils_2.hexlify)(Buffer.alloc(65, 1)) }, userOp);
+-    const packed = (0, utils_2.arrayify)((0, utils_1.packUserOp)(p));
++    const packed = (0, utils_2.arrayify)((0, utils_1.packUserOp)(p, false));
+     const callDataCost = packed.map(x => x === 0 ? ov.zeroByte : ov.nonZeroByte).reduce((sum, x) => sum + x);
+     const ret = Math.round(callDataCost +
+         ov.fixed / ov.bundleSize +

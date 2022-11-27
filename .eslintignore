@@ -6,3 +6,4 @@ jest.config.js
 build
 LICENSE
 yarn.lock
+patches
