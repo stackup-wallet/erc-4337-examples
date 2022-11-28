@@ -21,6 +21,7 @@ _**Quick note on @account-abstraction/sdk: there is currently a [bug in how gas 
   - [Simple Wallet](#simple-wallet)
     - [Get wallet address](#get-wallet-address)
     - [Transfer ETH](#transfer-eth)
+    - [Transfer ERC-20 token](#transfer-erc-20-token)
 - [License](#license)
 - [Contact](#contact)
 
