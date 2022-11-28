@@ -12,7 +12,8 @@
     "prettier:fix": "prettier --write --ignore-path ./.eslintignore '**'",
     "init": "ts-node scripts/init.ts",
     "simpleWallet:address": "ts-node scripts/simpleWallet/address.ts",
-    "simpleWallet:transfer": "ts-node scripts/simpleWallet/transfer.ts"
+    "simpleWallet:transfer": "ts-node scripts/simpleWallet/transfer.ts",
+    "simpleWallet:erc20Transfer": "ts-node scripts/simpleWallet/erc20Transfer.ts"
   },
   "dependencies": {
     "@account-abstraction/sdk": "^0.2.3",
