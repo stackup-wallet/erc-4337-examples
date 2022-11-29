@@ -1,19 +1,19 @@
-import { getSimpleWallet } from "../../src";
+import { getSimpleAccount } from "../../src";
 import { ethers } from "ethers";
 // @ts-ignore
 import config from "../../config.json";
 
 async function main() {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
-  const walletAPI = getSimpleWallet(
+  const accountAPI = getSimpleAccount(
     provider,
     config.signingKey,
     config.entryPoint,
-    config.simpleWalletFactory
+    config.simpleAccountFactory
   );
-  const address = await walletAPI.getCounterFactualAddress();
+  const address = await accountAPI.getCounterFactualAddress();
 
-  console.log(`SimpleWallet address: ${address}`);
+  console.log(`SimpleAccount address: ${address}`);
 }
 
 main().catch((error) => {

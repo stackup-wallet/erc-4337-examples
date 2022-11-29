@@ -1,7 +1,6 @@
 import { ethers } from "ethers";
 import {
-  ERC20_ABI,
-  getSimpleWallet,
+  getSimpleAccount,
   getGasFee,
   printOp,
   getHttpRpcClient,
@@ -13,51 +12,40 @@ import config from "../../config.json";
 // EntryPoint
 //  ┕> sender.execFromEntryPoint
 //    ┕> sender.execBatch
-//      ┕> token.transfer (recipient 1)
+//      ┕> sender.transfer (recipient 1)
 //      ⋮
-//      ┕> token.transfer (recipient N)
+//      ┕> sender.transfer (recipient N)
 async function main() {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
-  const walletAPI = getSimpleWallet(
+  const accountAPI = getSimpleAccount(
     provider,
     config.signingKey,
     config.entryPoint,
-    config.simpleWalletFactory
+    config.simpleAccountFactory
   );
-  const sender = await walletAPI.getCounterFactualAddress();
+  const sender = await accountAPI.getCounterFactualAddress();
 
-  const token = ethers.utils.getAddress(process.argv[2]);
-  const value = process.argv[4];
-  const erc20 = new ethers.Contract(token, ERC20_ABI, provider);
-  const [symbol, decimals] = await Promise.all([
-    erc20.symbol(),
-    erc20.decimals(),
-  ]);
-  const amount = ethers.utils.parseUnits(value, decimals);
-
+  const ac = await accountAPI._getAccountContract();
+  const value = ethers.utils.parseEther(process.argv[3]);
   let dest: Array<string> = [];
   let data: Array<string> = [];
-  process.argv[3]
+  process.argv[2]
     .split(",")
     .map((addr) => addr.trim())
     .forEach((addr) => {
-      dest = [...dest, erc20.address];
+      dest = [...dest, sender];
       data = [
         ...data,
-        erc20.interface.encodeFunctionData("transfer", [
+        ac.interface.encodeFunctionData("transfer", [
           ethers.utils.getAddress(addr),
-          amount,
+          value,
         ]),
       ];
     });
-  console.log(
-    `Batch transferring ${value} ${symbol} to ${dest.length} recipients...`
-  );
 
-  const wc = await walletAPI._getWalletContract();
-  const op = await walletAPI.createSignedUserOp({
+  const op = await accountAPI.createSignedUserOp({
     target: sender,
-    data: wc.interface.encodeFunctionData("execBatch", [dest, data]),
+    data: ac.interface.encodeFunctionData("execBatch", [dest, data]),
     ...(await getGasFee(provider)),
   });
   console.log(`Signed UserOperation: ${await printOp(op)}`);
@@ -71,7 +59,7 @@ async function main() {
   console.log(`RequestID: ${reqId}`);
 
   console.log("Waiting for transaction...");
-  const txHash = await walletAPI.getUserOpReceipt(reqId);
+  const txHash = await accountAPI.getUserOpReceipt(reqId);
   console.log(`Transaction hash: ${txHash}`);
 }
 
