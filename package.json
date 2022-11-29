@@ -5,23 +5,20 @@
   "repository": "git@github.com:stackup-wallet/erc-4337-examples.git",
   "license": "MIT",
   "scripts": {
-    "postinstall": "patch-package",
     "lint": "eslint . && tsc --noEmit",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --check --ignore-path ./.eslintignore '**'",
     "prettier:fix": "prettier --write --ignore-path ./.eslintignore '**'",
     "init": "ts-node scripts/init.ts",
-    "simpleWallet:address": "ts-node scripts/simpleWallet/address.ts",
-    "simpleWallet:transfer": "ts-node scripts/simpleWallet/transfer.ts",
-    "simpleWallet:erc20Transfer": "ts-node scripts/simpleWallet/erc20Transfer.ts",
-    "simpleWallet:batchTransfer": "ts-node scripts/simpleWallet/batchTransfer.ts",
-    "simpleWallet:batchErc20Transfer": "ts-node scripts/simpleWallet/batchErc20Transfer.ts"
+    "simpleAccount:address": "ts-node scripts/simpleAccount/address.ts",
+    "simpleAccount:transfer": "ts-node scripts/simpleAccount/transfer.ts",
+    "simpleAccount:erc20Transfer": "ts-node scripts/simpleAccount/erc20Transfer.ts",
+    "simpleAccount:batchTransfer": "ts-node scripts/simpleAccount/batchTransfer.ts",
+    "simpleAccount:batchErc20Transfer": "ts-node scripts/simpleAccount/batchErc20Transfer.ts"
   },
   "dependencies": {
-    "@account-abstraction/sdk": "^0.2.3",
-    "ethers": "^5.7.2",
-    "patch-package": "^6.5.0",
-    "postinstall-postinstall": "^2.1.0"
+    "@account-abstraction/sdk": "^0.3.0",
+    "ethers": "^5.7.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",

@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import {
-  getSimpleWallet,
+  getSimpleAccount,
   getGasFee,
   printOp,
   getHttpRpcClient,
@@ -10,16 +10,16 @@ import config from "../../config.json";
 
 async function main() {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
-  const walletAPI = getSimpleWallet(
+  const accountAPI = getSimpleAccount(
     provider,
     config.signingKey,
     config.entryPoint,
-    config.simpleWalletFactory
+    config.simpleAccountFactory
   );
 
   const target = ethers.utils.getAddress(process.argv[2]);
   const value = ethers.utils.parseEther(process.argv[3]);
-  const op = await walletAPI.createSignedUserOp({
+  const op = await accountAPI.createSignedUserOp({
     target,
     value,
     data: "0x",
@@ -36,7 +36,7 @@ async function main() {
   console.log(`RequestID: ${reqId}`);
 
   console.log("Waiting for transaction...");
-  const txHash = await walletAPI.getUserOpReceipt(reqId);
+  const txHash = await accountAPI.getUserOpReceipt(reqId);
   console.log(`Transaction hash: ${txHash}`);
 }
 
