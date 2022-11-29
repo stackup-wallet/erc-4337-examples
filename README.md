@@ -22,6 +22,8 @@ _**Quick note on @account-abstraction/sdk: there is currently a [bug in how gas 
     - [Get wallet address](#get-wallet-address)
     - [Transfer ETH](#transfer-eth)
     - [Transfer ERC-20 token](#transfer-erc-20-token)
+    - [Batch transfer ETH](#batch-transfer-eth)
+    - [Batch transfer ERC-20 token](#batch-transfer-erc-20-token)
 - [License](#license)
 - [Contact](#contact)
 
@@ -115,6 +117,26 @@ This command does not use a paymaster so make sure to also have enough ETH to pa
 
 ```bash
 yarn run simpleWallet:erc20Transfer <token-address> <recipient-address> <token-amount>
+```
+
+### Batch transfer ETH
+
+This example shows how we can do multiple atomic ETH transfers in a single transaction.
+
+```bash
+# recipient-addresses is comma separated.
+# e.g. 0x123..abc,0x456...def
+yarn run simpleWallet:batchTransfer <recipient-addresses> <eth-amount>
+```
+
+### Batch transfer ERC-20 token
+
+Similar to `simpleWallet:batchTransfer`, we can also do multiple atomic contract interactions in a single transaction. This example shows us how with an ERC-20 token.
+
+```bash
+# recipient-addresses is comma separated.
+# e.g. 0x123..abc,0x456...def
+yarn run simpleWallet:batchErc20Transfer <token-address> <recipient-addresses> <token-amount>
 ```
 
 # License

@@ -1,6 +1,5 @@
 import { ethers } from "ethers";
 import {
-  ERC20_ABI,
   getSimpleWallet,
   getGasFee,
   printOp,
@@ -9,6 +8,13 @@ import {
 // @ts-ignore
 import config from "../../config.json";
 
+// This example requires several layers of calls:
+// EntryPoint
+//  ┕> sender.execFromEntryPoint
+//    ┕> sender.execBatch
+//      ┕> sender.transfer (recipient 1)
+//      ⋮
+//      ┕> sender.transfer (recipient N)
 async function main() {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
   const walletAPI = getSimpleWallet(
@@ -17,21 +23,29 @@ async function main() {
     config.entryPoint,
     config.simpleWalletFactory
   );
+  const sender = await walletAPI.getCounterFactualAddress();
 
-  const token = ethers.utils.getAddress(process.argv[2]);
-  const to = ethers.utils.getAddress(process.argv[3]);
-  const value = process.argv[4];
-  const erc20 = new ethers.Contract(token, ERC20_ABI, provider);
-  const [symbol, decimals] = await Promise.all([
-    erc20.symbol(),
-    erc20.decimals(),
-  ]);
-  const amount = ethers.utils.parseUnits(value, decimals);
-  console.log(`Transferring ${value} ${symbol}...`);
+  const wc = await walletAPI._getWalletContract();
+  const value = ethers.utils.parseEther(process.argv[3]);
+  let dest: Array<string> = [];
+  let data: Array<string> = [];
+  process.argv[2]
+    .split(",")
+    .map((addr) => addr.trim())
+    .forEach((addr) => {
+      dest = [...dest, sender];
+      data = [
+        ...data,
+        wc.interface.encodeFunctionData("transfer", [
+          ethers.utils.getAddress(addr),
+          value,
+        ]),
+      ];
+    });
 
   const op = await walletAPI.createSignedUserOp({
-    target: erc20.address,
-    data: erc20.interface.encodeFunctionData("transfer", [to, amount]),
+    target: sender,
+    data: wc.interface.encodeFunctionData("execBatch", [dest, data]),
     ...(await getGasFee(provider)),
   });
   console.log(`Signed UserOperation: ${await printOp(op)}`);

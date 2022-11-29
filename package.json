@@ -13,7 +13,9 @@
     "init": "ts-node scripts/init.ts",
     "simpleWallet:address": "ts-node scripts/simpleWallet/address.ts",
     "simpleWallet:transfer": "ts-node scripts/simpleWallet/transfer.ts",
-    "simpleWallet:erc20Transfer": "ts-node scripts/simpleWallet/erc20Transfer.ts"
+    "simpleWallet:erc20Transfer": "ts-node scripts/simpleWallet/erc20Transfer.ts",
+    "simpleWallet:batchTransfer": "ts-node scripts/simpleWallet/batchTransfer.ts",
+    "simpleWallet:batchErc20Transfer": "ts-node scripts/simpleWallet/batchErc20Transfer.ts"
   },
   "dependencies": {
     "@account-abstraction/sdk": "^0.2.3",
