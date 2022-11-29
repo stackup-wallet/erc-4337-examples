@@ -1,5 +1,5 @@
 import { SimpleAccountAPI } from "@account-abstraction/sdk";
-import { ethers, BigNumberish } from "ethers";
+import { ethers } from "ethers";
 import { JsonRpcProvider } from "@ethersproject/providers";
 
 export function getSimpleAccount(
