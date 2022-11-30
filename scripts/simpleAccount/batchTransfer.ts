@@ -55,11 +55,11 @@ async function main() {
     config.bundlerUrl,
     config.entryPoint
   );
-  const reqId = await client.sendUserOpToBundler(op);
-  console.log(`RequestID: ${reqId}`);
+  const uoHash = await client.sendUserOpToBundler(op);
+  console.log(`UserOpHash: ${uoHash}`);
 
   console.log("Waiting for transaction...");
-  const txHash = await accountAPI.getUserOpReceipt(reqId);
+  const txHash = await accountAPI.getUserOpReceipt(uoHash);
   console.log(`Transaction hash: ${txHash}`);
 }
 

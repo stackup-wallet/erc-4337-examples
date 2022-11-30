@@ -18,7 +18,7 @@ export function getSimpleAccount(
 
   // Hack: default getUserOpReceipt does not include fromBlock which causes an error for some RPC providers.
   sw.getUserOpReceipt = async (
-    requestId: string,
+    userOpHash: string,
     timeout = 30000,
     interval = 5000
   ): Promise<string | null> => {
@@ -28,7 +28,7 @@ export function getSimpleAccount(
       // @ts-ignore
       const events = await sw.entryPointView.queryFilter(
         // @ts-ignore
-        sw.entryPointView.filters.UserOperationEvent(requestId),
+        sw.entryPointView.filters.UserOperationEvent(userOpHash),
         Math.max(100, block.number - 100)
       );
       if (events.length > 0) {
