@@ -69,7 +69,7 @@ All UserOperations have a `signature` field which smart contract accounts will u
 
 ### `entryPoint`
 
-**Default value is set to `0x1D9a2CB3638C2FC8bF9C01D088B79E75CD188b17`.**
+**Default value is set to `0x78d4f01f56b982a3B03C4E127A5D3aFa8EBee686`.**
 
 This is address of the singleton EntryPoint contract. It is the same on all networks.
 

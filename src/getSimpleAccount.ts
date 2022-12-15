@@ -22,13 +22,16 @@ export function getSimpleAccount(
     timeout = 30000,
     interval = 5000
   ): Promise<string | null> => {
+    const abi = [
+      "event UserOperationEvent(bytes32 indexed userOpHash, address indexed sender, address indexed paymaster, uint256 nonce, bool success, uint256 actualGasCost, uint256 actualGasUsed)",
+    ];
+    const ep = new ethers.Contract(sw.entryPointAddress, abi, sw.provider);
+
     const block = await sw.provider.getBlock("latest");
     const endtime = Date.now() + timeout;
     while (Date.now() < endtime) {
-      // @ts-ignore
-      const events = await sw.entryPointView.queryFilter(
-        // @ts-ignore
-        sw.entryPointView.filters.UserOperationEvent(userOpHash),
+      const events = await ep.queryFilter(
+        ep.filters.UserOperationEvent(userOpHash),
         Math.max(100, block.number - 100)
       );
       if (events.length > 0) {
