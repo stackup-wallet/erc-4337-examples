@@ -139,7 +139,10 @@ yarn run simpleAccount:batchErc20Transfer <token-address> <recipient-addresses> 
 ```
 ### Swap on Uniswap
 
-Details soon. 
+```bash
+yarn run swap
+```
+
 
 
 
