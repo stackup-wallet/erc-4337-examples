@@ -1,25 +1,32 @@
 {
   "name": "erc-4337-examples",
+ 
   "version": "1.0.0",
-  "description": "A collection of example scripts for working with ERC-4337.",
-  "repository": "git@github.com:stackup-wallet/erc-4337-examples.git",
+  "description": "script to swap tokens with erc4337 on uniswap",
+  "repository": "git@github.com:/BitsFinancial/bits-smart-contract-wrapper.git",
   "license": "MIT",
   "scripts": {
     "lint": "eslint . && tsc --noEmit",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --check --ignore-path ./.eslintignore '**'",
     "prettier:fix": "prettier --write --ignore-path ./.eslintignore '**'",
-    "init": "ts-node scripts/init.ts",
-    "simpleAccount:address": "ts-node scripts/simpleAccount/address.ts",
-    "simpleAccount:transfer": "ts-node scripts/simpleAccount/transfer.ts",
-    "simpleAccount:erc20Transfer": "ts-node scripts/simpleAccount/erc20Transfer.ts",
-    "simpleAccount:batchTransfer": "ts-node scripts/simpleAccount/batchTransfer.ts",
-    "simpleAccount:batchErc20Transfer": "ts-node scripts/simpleAccount/batchErc20Transfer.ts",
-    "swap": "ts-node swapPrompts.ts"
+    "swap": "ts-node swapPrompts.ts",
+    "multi": "ts-node multi.ts",
+    "start": "nodemon api.js"
   },
   "dependencies": {
     "@account-abstraction/sdk": "^0.3.0",
-    "ethers": "^5.7.2"
+    "@uniswap/v3-core": "^1.0.1",
+    "@uniswap/v3-periphery": "^1.4.0",
+    "@uniswap/v3-sdk": "^3.9.0",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
+    "prompts": "^2.4.2",
+    "web3": "^1.8.1",
+    "yargs": "^17.6.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "querystring": "^0.2.1"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
