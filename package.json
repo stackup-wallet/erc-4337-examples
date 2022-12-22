@@ -10,9 +10,9 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --check --ignore-path ./.eslintignore '**'",
     "prettier:fix": "prettier --write --ignore-path ./.eslintignore '**'",
-    "swap": "ts-node swapPrompts.ts",
+    "swap": "ts-node  swapPrompts.ts",
     "multi": "ts-node multi.ts",
-    "start": "nodemon api.js"
+    "start": "ts-node  api.ts"
   },
   "dependencies": {
     "@account-abstraction/sdk": "^0.3.0",
