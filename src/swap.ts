@@ -33,7 +33,6 @@ async function main() {
   // token to swap eth for on Goerli
   const DAI = "0xdc31ee1784292379fbb2964b3b9c4124d8f89c60"
   const bitUSDC  = "0xe6F7C1D584aDFBC2cb8b2854263671dC0913e763"
-  const bitsToken = "0x61E20b5900aD7c8a2587BfB51A07E2D0651aF99D"
   const UniswapToken = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
 
 
