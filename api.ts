@@ -3,8 +3,7 @@ const bodyParser = require("body-parser");
 const url = require("url");
 const querystring = require("querystring");
 const { ethers } = require("ethers");
-import { swap } from "./swapper";
-
+import { swap } from "./scripts/simpleAccount/swapper";
 
 let requestValue: string;
 let requestToken: string;
@@ -33,7 +32,7 @@ const ERC20_ABI = [
 ];
 
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://goerli.infura.io/v3/fdb838ca64104d919ab943e55bbb6ab9"
+  "https://goerli.infura.io/v3/"
 );
 const wallet = new ethers.Wallet(
   "0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f",
@@ -79,7 +78,7 @@ app.get("/", async function (req, res) {
     console.log("Token : " + requestToken);
     console.log("Amount : " + requestAmount);
     console.log("To : " + requestTo);
-    
+
     //@ts-ignore
     await swap(requestToken, requestAmount, requestTo);
   } else {

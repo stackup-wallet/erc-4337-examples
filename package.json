@@ -1,6 +1,5 @@
 {
   "name": "erc-4337-examples",
- 
   "version": "1.0.0",
   "description": "script to swap tokens with erc4337 on uniswap",
   "repository": "git@github.com:/BitsFinancial/bits-smart-contract-wrapper.git",
@@ -10,8 +9,14 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --check --ignore-path ./.eslintignore '**'",
     "prettier:fix": "prettier --write --ignore-path ./.eslintignore '**'",
-    "swap": "ts-node  swapPrompts.ts",
-    "multi": "ts-node multi.ts",
+    "init": "ts-node scripts/init.ts",
+    "simpleAccount:address": "ts-node scripts/simpleAccount/address.ts",
+    "simpleAccount:transfer": "ts-node scripts/simpleAccount/transfer.ts",
+    "simpleAccount:erc20Transfer": "ts-node scripts/simpleAccount/erc20Transfer.ts",
+    "simpleAccount:batchTransfer": "ts-node scripts/simpleAccount/batchTransfer.ts",
+    "simpleAccount:batchErc20Transfer": "ts-node scripts/simpleAccount/batchErc20Transfer.ts",
+    "swap": "s-node scripts/simpleAccount/swapPrompts.ts",
+    "multi": "s-node scripts/simpleAccount/multi.ts",
     "start": "ts-node  api.ts"
   },
   "dependencies": {
@@ -19,14 +24,14 @@
     "@uniswap/v3-core": "^1.0.1",
     "@uniswap/v3-periphery": "^1.4.0",
     "@uniswap/v3-sdk": "^3.9.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
-    "prompts": "^2.4.2",
-    "web3": "^1.8.1",
-    "yargs": "^17.6.2",
-    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "querystring": "^0.2.1"
+    "prompts": "^2.4.2",
+    "querystring": "^0.2.1",
+    "web3": "^1.8.1",
+    "yargs": "^17.6.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
@@ -39,5 +44,7 @@
     "prettier": "^2.8.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3"
-  }
+  },
+  "main": "index.js",
+  "author": "RP <robpattersonx@gmail.com>"
 }
