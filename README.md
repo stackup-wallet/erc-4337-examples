@@ -137,6 +137,12 @@ Similar to `simpleAccount:batchTransfer`, we can also do multiple atomic contrac
 # e.g. 0x123..abc,0x456...def
 yarn run simpleAccount:batchErc20Transfer <token-address> <recipient-addresses> <token-amount>
 ```
+### Swap on Uniswap
+
+Details soon. 
+
+
+
 
 # License
 
