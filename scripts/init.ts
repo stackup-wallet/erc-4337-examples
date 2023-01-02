@@ -5,10 +5,10 @@ import { ethers } from "ethers";
 
 const INIT_CONFIG = {
   bundlerUrl: "http://localhost:4337",
-  rpcUrl: "https://rpc-mumbai.maticvigil.com/",
+  rpcUrl: "http://localhost:8545",
   signingKey: new ethers.Wallet(ethers.utils.randomBytes(32)).privateKey,
-  entryPoint: "0x78d4f01f56b982a3B03C4E127A5D3aFa8EBee686",
-  simpleAccountFactory: "0xe19E9755942BB0bD0cCCCe25B1742596b8A8250b",
+  entryPoint: "0x1306b01bC3e4AD202612D3843387e94737673F53",
+  simpleAccountFactory: "0xc99963686CB64e3B98DF7E877318D02D85DFE326",
 };
 const CONFIG_PATH = path.resolve(__dirname, "../config.json");
 

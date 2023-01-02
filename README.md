@@ -57,7 +57,7 @@ You can run a self-hosted instance with [stackup-bundler](https://github.com/sta
 
 ### `rpcUrl`
 
-**Default value is set to `https://rpc-mumbai.maticvigil.com/`.**
+**Default value is set to `http://localhost:8545`.**
 
 This is a standard RPC URL for an ethereum node. By default it uses the public RPC for Polygon mumbai testnet. You can change this to any network you like.
 
@@ -69,15 +69,17 @@ All UserOperations have a `signature` field which smart contract accounts will u
 
 ### `entryPoint`
 
-**Default value is set to `0x78d4f01f56b982a3B03C4E127A5D3aFa8EBee686`.**
+**Default value is set to `0x1306b01bC3e4AD202612D3843387e94737673F53`.**
 
 This is address of the singleton EntryPoint contract. It is the same on all networks.
 
 ### `simpleAccountFactory`
 
-**Default value is set to `0xe19E9755942BB0bD0cCCCe25B1742596b8A8250b`.**
+**Default value is set to `0xc99963686CB64e3B98DF7E877318D02D85DFE326`.**
 
 This is factory address for deploying [SimpleAccount.sol](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/samples/SimpleAccount.sol). It is the same on all networks and allows us to generate deterministic addresses.
+
+_The default factory deploys a [forked version of `SimpleAccount.sol`](https://github.com/hazim-j/account-abstraction/blob/7f31abdd702772890a6633af70e1598e23f9b177/contracts/samples/SimpleAccount.sol#L98) with a one line change to make calling batched transactions easier._
 
 # Commands
 

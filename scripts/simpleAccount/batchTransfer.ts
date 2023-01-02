@@ -10,11 +10,10 @@ import config from "../../config.json";
 
 // This example requires several layers of calls:
 // EntryPoint
-//  ┕> sender.execFromEntryPoint
-//    ┕> sender.execBatch
-//      ┕> sender.transfer (recipient 1)
-//      ⋮
-//      ┕> sender.transfer (recipient N)
+//  ┕> sender.executeBatch
+//    ┕> sender.execute (recipient 1)
+//    ⋮
+//    ┕> sender.execute (recipient N)
 async function main() {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
   const accountAPI = getSimpleAccount(
@@ -36,16 +35,17 @@ async function main() {
       dest = [...dest, sender];
       data = [
         ...data,
-        ac.interface.encodeFunctionData("transfer", [
+        ac.interface.encodeFunctionData("execute", [
           ethers.utils.getAddress(addr),
           value,
+          "0x",
         ]),
       ];
     });
 
   const op = await accountAPI.createSignedUserOp({
     target: sender,
-    data: ac.interface.encodeFunctionData("execBatch", [dest, data]),
+    data: ac.interface.encodeFunctionData("executeBatch", [dest, data]),
     ...(await getGasFee(provider)),
   });
   console.log(`Signed UserOperation: ${await printOp(op)}`);
