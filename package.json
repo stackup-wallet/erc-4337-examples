@@ -17,7 +17,7 @@
     "simpleAccount:batchErc20Transfer": "ts-node scripts/simpleAccount/batchErc20Transfer.ts"
   },
   "dependencies": {
-    "@account-abstraction/sdk": "^0.3.0",
+    "@account-abstraction/sdk": "^0.4.0",
     "ethers": "^5.7.2"
   },
   "devDependencies": {
