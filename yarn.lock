@@ -1513,6 +1513,11 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
 
+wretch@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/wretch/-/wretch-2.3.2.tgz#78396e5a33853b3dd951ea039072c3dfbcb7deb4"
+  integrity sha512-brN97Z2Mwed+w5z+keYI1u5OwWhPIaW0sJi9CxtKBVxLc3aqP6j1+2FCoIskM7WJq6SUHdxTFx20ox0iDLa0mQ==
+
 ws@7.4.6:
   version "7.4.6"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.6.tgz#5654ca8ecdeee47c33a9a4bf6d28e2be2980377c"
