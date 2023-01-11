@@ -14,11 +14,13 @@
     "simpleAccount:transfer": "ts-node scripts/simpleAccount/transfer.ts",
     "simpleAccount:erc20Transfer": "ts-node scripts/simpleAccount/erc20Transfer.ts",
     "simpleAccount:batchTransfer": "ts-node scripts/simpleAccount/batchTransfer.ts",
-    "simpleAccount:batchErc20Transfer": "ts-node scripts/simpleAccount/batchErc20Transfer.ts"
+    "simpleAccount:batchErc20Transfer": "ts-node scripts/simpleAccount/batchErc20Transfer.ts",
+    "simpleAccount:sponsorTransfer": "ts-node scripts/simpleAccount/sponsorTransfer.ts"
   },
   "dependencies": {
     "@account-abstraction/sdk": "^0.4.0",
-    "ethers": "^5.7.2"
+    "ethers": "^5.7.2",
+    "wretch": "^2.3.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
