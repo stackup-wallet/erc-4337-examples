@@ -7,8 +7,8 @@ import {
 } from "../../src";
 // @ts-ignore
 import config from "../../config.json";
-import wretch from "wretch";
 import { resolveProperties } from "ethers/lib/utils";
+import axios from "axios";
 
 async function main() {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
@@ -35,14 +35,16 @@ async function main() {
   });
 
   const serializedOp = await resolveProperties(op);
-  const paymasterAndData = await wretch(config.verifyingPaymasterUrl)
-    .post({
+  const paymasterAndData = await axios
+    .post(config.verifyingPaymasterUrl, {
       jsonrpc: "2.0",
       id: 1,
       method: "pm_sendUserOperation",
       params: [serializedOp, config.entryPoint],
     })
-    .json((resp) => resp.result);
+    .then((res) => res.data.result);
+  console.log("paymasterAndData", paymasterAndData);
+
   const op2 = await accountAPI.signUserOp({
     ...op,
     paymasterAndData,
