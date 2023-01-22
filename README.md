@@ -69,13 +69,13 @@ All UserOperations have a `signature` field which smart contract accounts will u
 
 ### `entryPoint`
 
-**Default value is set to `0x1306b01bC3e4AD202612D3843387e94737673F53`.**
+**Default value is set to `0x0F46c65C17AA6b4102046935F33301f0510B163A`.**
 
 This is address of the singleton EntryPoint contract. It is the same on all networks.
 
 ### `simpleAccountFactory`
 
-**Default value is set to `0xc99963686CB64e3B98DF7E877318D02D85DFE326`.**
+**Default value is set to `0x6C583EE7f3a80cB53dDc4789B0Af1aaFf90e55F3`.**
 
 This is the factory address for deploying [SimpleAccount.sol](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/samples/SimpleAccount.sol). It is the same on all networks and allows us to generate deterministic addresses.
 
