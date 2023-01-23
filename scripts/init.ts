@@ -9,7 +9,8 @@ const INIT_CONFIG = {
   signingKey: new ethers.Wallet(ethers.utils.randomBytes(32)).privateKey,
   entryPoint: "0x1306b01bC3e4AD202612D3843387e94737673F53",
   simpleAccountFactory: "0xc99963686CB64e3B98DF7E877318D02D85DFE326",
-  paymaster: "0xf5e6f3cdb0cfe01131eb6ee674cb62c9d811ac2d"
+  paymaster: "0xf5e6f3cdb0cfe01131eb6ee674cb62c9d811ac2d",
+  verifyingPaymasterUrl: "",
 };
 const CONFIG_PATH = path.resolve(__dirname, "../config.json");
 
