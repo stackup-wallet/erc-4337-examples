@@ -11,8 +11,8 @@ import config from "../../config.json";
 
 // This is an example script for sending a transaction that has its gas fees sponsored by
 // a paymaster. First, a user operation is constructed and signed by the smart contract account.
-// The paymaster (in this case Stackup's hosted paymaster) signs this user operation and returns
-// the data. This data is added to the user operation and sent to the bundler.
+// The paymaster signs this user operation and returns the data. This data is added to the user
+// operation and sent to the bundler.
 
 async function main() {
   // Create an accountAPI object for the account.
@@ -56,31 +56,6 @@ async function main() {
     paymasterAndData,
   });
   console.log(`Signed UserOperation: ${await printOp(signedOp)}`);
-
-  // // The account signs the user operation.
-  // const op = await accountAPI.signUserOp({
-  //   ...unsignedOp,
-  //   preVerificationGas: 50000, // temporary fix for v0.2.0. v0.3.0 should fix this
-  // });
-  // const serializedOp = await resolveProperties(op);
-
-  // // Ask the paymaster to sign the transaction and return it.
-  // const paymasterAndData = await axios
-  //   .post(config.verifyingPaymasterUrl, {
-  //     jsonrpc: "2.0",
-  //     id: 1,
-  //     method: "pm_sendUserOperation",
-  //     params: [serializedOp, config.entryPoint],
-  //   })
-  //   .then((res) => res.data.result);
-  // console.log("paymasterAndData", paymasterAndData);
-
-  // // Add the signed paymaster data to the user operation that has been signed by the account
-  // const op2 = await accountAPI.signUserOp({
-  //   ...op,
-  //   paymasterAndData,
-  // });
-  // console.log(`Signed UserOperation: ${await printOp(op2)}`);
 
   // Create a connection to the bundler
   const client = await getHttpRpcClient(
