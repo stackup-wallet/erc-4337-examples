@@ -14,7 +14,9 @@ All scripts in this repository is built using [@account-abstraction/sdk](https:/
     - [`rpcUrl`](#rpcurl)
     - [`signingKey`](#signingkey)
     - [`entryPoint`](#entrypoint)
-    - [`simpleAccountFactory`](#simpleAccountFactory)
+    - [`simpleAccountFactory`](#simpleaccountfactory)
+    - [`paymaster`](#paymaster)
+    - [`verifyingPaymasterUrl`](#verifyingpaymasterurl)
 - [Commands](#commands)
   - [Simple Account](#simple-account)
     - [Get account address](#get-account-address)
@@ -81,6 +83,18 @@ This is the factory address for deploying [SimpleAccount.sol](https://github.com
 
 _The default factory deploys a [forked version of `SimpleAccount.sol`](https://github.com/hazim-j/account-abstraction/blob/7f31abdd702772890a6633af70e1598e23f9b177/contracts/samples/SimpleAccount.sol#L98) with a one line change to make calling batched transactions easier._
 
+### `paymaster`
+
+**Default value is set to `0xf5e6f3cdb0cfe01131eb6ee674cb62c9d811ac2d`.**
+
+This is address of the example Paymaster contract on the Ethereum Goerli network.
+
+### `verifyingPaymasterUrl`
+
+**Default value is set to "".**
+
+This field specifies the URL of the verifying Paymaster used in `sponsorTransfer` example.
+
 # Commands
 
 Once you have an environment setup, these commands can be used for running the example scripts.
@@ -137,6 +151,14 @@ Similar to `simpleAccount:batchTransfer`, we can also do multiple atomic contrac
 # recipient-addresses is comma separated.
 # e.g. 0x123..abc,0x456...def
 yarn run simpleAccount:batchErc20Transfer <token-address> <recipient-addresses> <token-amount>
+```
+
+### Sponsored ETH Transfer
+
+This example shows how to do an ETH transfer sponsored by a Paymaster.
+
+```bash
+yarn run simpleAccount:sponsorTransfer <recipient-address> <token-amount>
 ```
 
 # License
