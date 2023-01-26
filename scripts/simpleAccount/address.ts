@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 // @ts-ignore
 import config from "../../config.json";
 
-async function main() {
+export default async function main() {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
   const accountAPI = getSimpleAccount(
     provider,
@@ -15,8 +15,3 @@ async function main() {
 
   console.log(`SimpleAccount address: ${address}`);
 }
-
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});

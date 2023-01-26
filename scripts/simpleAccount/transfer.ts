@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import {
+  getVerifyingPaymaster,
   getSimpleAccount,
   getGasFee,
   printOp,
@@ -8,17 +9,21 @@ import {
 // @ts-ignore
 import config from "../../config.json";
 
-async function main() {
+export default async function main(t: string, amt: string, withPM: boolean) {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
+  const paymasterAPI = withPM
+    ? getVerifyingPaymaster(config.paymasterUrl, config.entryPoint)
+    : undefined;
   const accountAPI = getSimpleAccount(
     provider,
     config.signingKey,
     config.entryPoint,
-    config.simpleAccountFactory
+    config.simpleAccountFactory,
+    paymasterAPI
   );
 
-  const target = ethers.utils.getAddress(process.argv[2]);
-  const value = ethers.utils.parseEther(process.argv[3]);
+  const target = ethers.utils.getAddress(t);
+  const value = ethers.utils.parseEther(amt);
   const op = await accountAPI.createSignedUserOp({
     target,
     value,
@@ -39,8 +44,3 @@ async function main() {
   const txHash = await accountAPI.getUserOpReceipt(uoHash);
   console.log(`Transaction hash: ${txHash}`);
 }
-
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
