@@ -25,7 +25,7 @@ class VerifyingPaymasterAPI extends PaymasterAPI {
   async getPaymasterAndData(
     userOp: Partial<UserOperationStruct>
   ): Promise<string> {
-    // Hack: userOp doesn't include empty paymasterAndData which calcPreVerificationGas requires.
+    // Hack: userOp includes empty paymasterAndData which calcPreVerificationGas requires.
     try {
       // userOp.preVerificationGas contains a promise that will resolve to an error.
       await ethers.utils.resolveProperties(userOp);

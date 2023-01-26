@@ -32,6 +32,7 @@ export default async function main(
     paymasterAPI
   );
   const sender = await accountAPI.getCounterFactualAddress();
+
   const ac = await accountAPI._getAccountContract();
   const value = ethers.utils.parseEther(amt);
   let dest: Array<string> = [];
