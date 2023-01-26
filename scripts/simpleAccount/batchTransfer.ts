@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import {
+  getVerifyingPaymaster,
   getSimpleAccount,
   getGasFee,
   printOp,
@@ -14,34 +15,38 @@ import config from "../../config.json";
 //    ┕> sender.execute (recipient 1)
 //    ⋮
 //    ┕> sender.execute (recipient N)
-async function main() {
+export default async function main(
+  t: Array<string>,
+  amt: string,
+  withPM: boolean
+) {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
+  const paymasterAPI = withPM
+    ? getVerifyingPaymaster(config.paymasterUrl, config.entryPoint)
+    : undefined;
   const accountAPI = getSimpleAccount(
     provider,
     config.signingKey,
     config.entryPoint,
-    config.simpleAccountFactory
+    config.simpleAccountFactory,
+    paymasterAPI
   );
   const sender = await accountAPI.getCounterFactualAddress();
-
   const ac = await accountAPI._getAccountContract();
-  const value = ethers.utils.parseEther(process.argv[3]);
+  const value = ethers.utils.parseEther(amt);
   let dest: Array<string> = [];
   let data: Array<string> = [];
-  process.argv[2]
-    .split(",")
-    .map((addr) => addr.trim())
-    .forEach((addr) => {
-      dest = [...dest, sender];
-      data = [
-        ...data,
-        ac.interface.encodeFunctionData("execute", [
-          ethers.utils.getAddress(addr),
-          value,
-          "0x",
-        ]),
-      ];
-    });
+  t.map((addr) => addr.trim()).forEach((addr) => {
+    dest = [...dest, sender];
+    data = [
+      ...data,
+      ac.interface.encodeFunctionData("execute", [
+        ethers.utils.getAddress(addr),
+        value,
+        "0x",
+      ]),
+    ];
+  });
 
   const op = await accountAPI.createSignedUserOp({
     target: sender,
@@ -62,8 +67,3 @@ async function main() {
   const txHash = await accountAPI.getUserOpReceipt(uoHash);
   console.log(`Transaction hash: ${txHash}`);
 }
-
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});

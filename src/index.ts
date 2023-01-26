@@ -1,7 +1,6 @@
 export * from "./abi";
 export * from "./getGasFee";
 export * from "./getHttpRpcClient";
+export * from "./getPaymaster";
 export * from "./getSimpleAccount";
-export * from "./printOp";
-export * from "./verifyPaymaster";
-export { VerifyingPaymasterAPI } from "./VerifyingPaymasterAPI";
+export * from "./opUtils";

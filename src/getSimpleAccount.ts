@@ -1,4 +1,4 @@
-import { SimpleAccountAPI } from "@account-abstraction/sdk";
+import { SimpleAccountAPI, PaymasterAPI } from "@account-abstraction/sdk";
 import { ethers } from "ethers";
 import { JsonRpcProvider } from "@ethersproject/providers";
 
@@ -6,7 +6,8 @@ export function getSimpleAccount(
   provider: JsonRpcProvider,
   signingKey: string,
   entryPointAddress: string,
-  factoryAddress: string
+  factoryAddress: string,
+  paymasterAPI?: PaymasterAPI
 ) {
   const owner = new ethers.Wallet(signingKey, provider);
   const sw = new SimpleAccountAPI({
@@ -14,6 +15,7 @@ export function getSimpleAccount(
     entryPointAddress,
     owner,
     factoryAddress,
+    paymasterAPI,
   });
 
   // Hack: default getUserOpReceipt does not include fromBlock which causes an error for some RPC providers.
