@@ -10,13 +10,7 @@
     "prettier": "prettier --check --ignore-path ./.eslintignore '**'",
     "prettier:fix": "prettier --write --ignore-path ./.eslintignore '**'",
     "init": "ts-node scripts/init.ts",
-    "simpleAccount": "ts-node scripts/simpleAccount/index.ts",
-    "simpleAccount:address": "ts-node scripts/simpleAccount/address.ts",
-    "simpleAccount:transfer": "ts-node scripts/simpleAccount/transfer.ts",
-    "simpleAccount:erc20Transfer": "ts-node scripts/simpleAccount/erc20Transfer.ts",
-    "simpleAccount:batchTransfer": "ts-node scripts/simpleAccount/batchTransfer.ts",
-    "simpleAccount:batchErc20Transfer": "ts-node scripts/simpleAccount/batchErc20Transfer.ts",
-    "simpleAccount:sponsorTransfer": "ts-node scripts/simpleAccount/sponsorTransfer.ts"
+    "simpleAccount": "ts-node scripts/simpleAccount/index.ts"
   },
   "dependencies": {
     "@account-abstraction/sdk": "^0.4.0",
