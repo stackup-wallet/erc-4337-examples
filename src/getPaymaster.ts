@@ -54,7 +54,7 @@ class VerifyingPaymasterAPI extends PaymasterAPI {
       .post<paymasterResponse>(this.paymasterUrl, {
         jsonrpc: "2.0",
         id: 1,
-        method: "pm_sendUserOperation",
+        method: "pm_sponsorUserOperation",
         params: [await toJSON(op), this.entryPoint],
       })
       .then((res) => res.data.result.toString());
