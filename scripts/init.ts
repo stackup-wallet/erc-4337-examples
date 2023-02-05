@@ -8,7 +8,7 @@ const INIT_CONFIG = {
   rpcUrl: "http://localhost:8545",
   signingKey: new ethers.Wallet(ethers.utils.randomBytes(32)).privateKey,
   entryPoint: "0x0F46c65C17AA6b4102046935F33301f0510B163A",
-  simpleAccountFactory: "0x6C583EE7f3a80cB53dDc4789B0Af1aaFf90e55F3",
+  simpleAccountFactory: "0x63658F82752688E3E2Dd2FA8C511E85e919F62D7",
   paymasterUrl: "",
 };
 const CONFIG_PATH = path.resolve(__dirname, "../config.json");
