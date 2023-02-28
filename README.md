@@ -76,7 +76,7 @@ This is address of the singleton EntryPoint contract. It is the same on all netw
 
 ### `simpleAccountFactory`
 
-**Default value is set to `0x63658F82752688E3E2Dd2FA8C511E85e919F62D7`.**
+**Default value is set to `0x71D63edCdA95C61D6235552b5Bc74E32d8e2527B`.**
 
 This is the factory address for deploying [SimpleAccount.sol](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/samples/SimpleAccount.sol). It is the same on all networks and allows us to generate deterministic addresses.
 
