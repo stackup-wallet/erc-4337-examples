@@ -4,9 +4,9 @@ import { PaymasterAPI, calcPreVerificationGas } from "@account-abstraction/sdk";
 import { UserOperationStruct } from "@account-abstraction/contracts";
 import { toJSON } from "./opUtils";
 
-const ADDR_SIZE = 20;
-const TIMESTAMP_SIZE = 64;
 const SIG_SIZE = 65;
+const DUMMY_PAYMASTER_AND_DATA =
+  "0x0101010101010101010101010101010101010101000000000000000000000000000000000000000000000000000001010101010100000000000000000000000000000000000000000000000000000000000000000101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101";
 
 interface paymasterResponse {
   jsonrpc: string;
@@ -41,12 +41,8 @@ class VerifyingPaymasterAPI extends PaymasterAPI {
       verificationGasLimit: userOp.verificationGasLimit,
       maxFeePerGas: userOp.maxFeePerGas,
       maxPriorityFeePerGas: userOp.maxPriorityFeePerGas,
-      // Paymaster API needs to know the size of the paymasterAndData field
-      // so it can calculate the preVerificationGas.
-      // We don't know the size of the paymasterAndData field until we get it from the paymaster.
-      // some values that are hexified contain zero bytes which affect the calculation of preVerificationGas.
-      paymasterAndData:
-        "0xfe7dbcab8aaee4eb67943c1e6be95b1d065985c6000000000000000000000000000000000000000000000000000001869aa31cf400000000000000000000000000000000000000000000000000000000000000007dfe2190f34af27b265bae608717cdc9368b471fc0c097ab7b4088f255b4961e57b039e7e571b15221081c5dce7bcb93459b27a3ab65d2f8a889f4a40b4022801b",
+      // A dummy value here is required in order to calculate a correct preVerificationGas value.
+      paymasterAndData: DUMMY_PAYMASTER_AND_DATA,
       signature: ethers.utils.hexlify(Buffer.alloc(SIG_SIZE, 1)),
     };
     const op = await ethers.utils.resolveProperties(pmOp);
