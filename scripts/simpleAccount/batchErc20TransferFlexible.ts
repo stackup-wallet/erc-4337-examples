@@ -24,7 +24,7 @@ export default async function main(
   withPM: boolean
 ) {
 
-  if (tokens.length != to.length || tokens.length != amounts.length || to.length != amounts.length) {
+  if (tokens.length != to.length || tokens.length != amounts.length) {
     throw new Error("All arrays must be of equal length");
   }
 
