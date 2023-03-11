@@ -55,7 +55,7 @@ program
     batchTransfer(opts.to.split(","), opts.amount, Boolean(opts.withPaymaster))
   );
 
-  program
+program
   .command("batchErc20Transfer")
   .description("Batch transfer ERC-20 token")
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
@@ -74,7 +74,7 @@ program
     )
   );
 
-  program
+program
   .command("batchErc20TransferFlexible")
   .description("Batch transfer multiple ERC-20 tokens with multiple amounts to multiple recipients")
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
