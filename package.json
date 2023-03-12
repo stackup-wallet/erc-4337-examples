@@ -13,7 +13,7 @@
     "simpleAccount": "ts-node scripts/simpleAccount/index.ts"
   },
   "dependencies": {
-    "@account-abstraction/sdk": "^0.4.0",
+    "@account-abstraction/sdk": "^0.5.0",
     "axios": "^1.2.3",
     "commander": "^10.0.0",
     "ethers": "^5.7.2"
