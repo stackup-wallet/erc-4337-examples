@@ -5,11 +5,19 @@ import {
   getGasFee,
   printOp,
   getHttpRpcClient,
+  getConfig,
+  Network,
 } from "../../src";
 // @ts-ignore
-import config from "../../config.json";
 
-export default async function main(t: string, amt: string, withPM: boolean) {
+export default async function main(
+  t: string,
+  amt: string,
+  withPM: boolean,
+  network: Network
+) {
+  const config = getConfig(network);
+  console.log(`🎯 network set to ${network}...`);
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
   const paymasterAPI = withPM
     ? getVerifyingPaymaster(config.paymasterUrl, config.entryPoint)

@@ -26,14 +26,19 @@ program
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
   .requiredOption("-t, --to <address>", "The recipient address")
   .requiredOption("-amt, --amount <eth>", "Amount in ETH to transfer")
+  .option(
+    "-n, --network <network>",
+    "Use network config file e.g.; polygon-mainnet.config.json (default: config.json)"
+  )
   .action(async (opts) =>
-    transfer(opts.to, opts.amount, Boolean(opts.withPaymaster))
+    transfer(opts.to, opts.amount, Boolean(opts.withPaymaster), opts.network)
   );
 
 program
   .command("erc20Transfer")
   .description("Transfer ERC-20 token")
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
+  .option("-c, --config", "Use a specific config file (default: config.json)")
   .requiredOption("-tkn, --token <address>", "The token address")
   .requiredOption("-t, --to <address>", "The recipient address")
   .requiredOption("-amt, --amount <decimal>", "Amount of the token to transfer")
@@ -45,6 +50,7 @@ program
   .command("batchTransfer")
   .description("Batch transfer ETH")
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
+  .option("-c, --config", "Use a specific config file (default: config.json)")
   .requiredOption(
     "-t, --to <addresses>",
     "Comma separated list of recipient addresses"
@@ -58,6 +64,7 @@ program
   .command("batchErc20Transfer")
   .description("Batch transfer ERC-20 token")
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
+  .option("-c, --config", "Use a specific config file (default: config.json)")
   .requiredOption("-tkn, --token <address>", "The token address")
   .requiredOption(
     "-t, --to <addresses>",

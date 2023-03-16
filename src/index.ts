@@ -3,4 +3,5 @@ export * from "./getGasFee";
 export * from "./getHttpRpcClient";
 export * from "./getPaymaster";
 export * from "./getSimpleAccount";
+export * from "./getConfig";
 export * from "./opUtils";
