@@ -8,6 +8,8 @@ All scripts in this repository is built using [@account-abstraction/sdk](https:/
 
 ## Table of contents
 
+- [Getting started](#getting-started)
+  - [Table of contents](#table-of-contents)
 - [Setup](#setup)
   - [Init config](#init-config)
     - [`bundlerUrl`](#bundlerurl)
@@ -15,14 +17,17 @@ All scripts in this repository is built using [@account-abstraction/sdk](https:/
     - [`signingKey`](#signingkey)
     - [`entryPoint`](#entrypoint)
     - [`simpleAccountFactory`](#simpleaccountfactory)
-    - [`paymasterUrl`](#verifyingpaymasterurl)
+    - [`paymasterUrl`](#paymasterurl)
 - [Commands](#commands)
+  - [Optional flags](#optional-flags)
+    - [With Paymaster](#with-paymaster)
   - [Simple Account](#simple-account)
     - [Get account address](#get-account-address)
     - [Transfer ETH](#transfer-eth)
     - [Transfer ERC-20 token](#transfer-erc-20-token)
     - [Batch transfer ETH](#batch-transfer-eth)
     - [Batch transfer ERC-20 token](#batch-transfer-erc-20-token)
+    - [Uniswap Approve and SwapExactETHForTokens on UniswapV2 Router](#uniswap-approve-and-swapexactethfortokens-on-uniswapv2-router)
 - [License](#license)
 - [Contact](#contact)
 
@@ -168,6 +173,14 @@ Similar to `simpleAccount batchTransfer`, we can also do multiple atomic contrac
 # recipient addresses is comma separated.
 # e.g. 0x123..abc,0x456...def
 yarn run simpleAccount batchErc20Transfer --token <address> --to <addresses> --amount <decimal>
+```
+
+### Uniswap Approve and SwapExactETHForTokens on UniswapV2 Router
+
+This examples shows how to do an approve and swapExactETHForTokens on a uniswapV2 router. Note that amountOutMin is hardcoded to 0, so DO NOT USE THIS EXAMPLE ON MAINNET otherwise you are likely to be sandwiched!
+
+```bash
+yarn run simpleAccount uniswapApproveAndSwap --token <address> --routerAddress <address> --weth <addresses> --amount <decimal>
 ```
 
 ---

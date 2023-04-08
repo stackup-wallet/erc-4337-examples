@@ -5,6 +5,7 @@ import transfer from "./transfer";
 import erc20Transfer from "./erc20Transfer";
 import batchTransfer from "./batchTransfer";
 import batchErc20Transfer from "./batchErc20Transfer";
+import uniswapApproveAndSwapExactETHForTokens from "./uniswapApproveAndSwapExactETHForTokens";
 
 const program = new Command();
 
@@ -39,6 +40,18 @@ program
   .requiredOption("-amt, --amount <decimal>", "Amount of the token to transfer")
   .action(async (opts) =>
     erc20Transfer(opts.token, opts.to, opts.amount, Boolean(opts.withPaymaster))
+  );
+
+program
+  .command("uniswapApproveAndSwap")
+  .description("Swap WETH for Token in one action on Uniswap")
+  .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
+  .requiredOption("-tkn, --token <address>", "The swap token address")
+  .requiredOption("-uniswapV2RouterAddress, --routerAddress <address>", "Uniswap V2 Router Address")
+  .requiredOption("-wethAddress, --weth <address>", "Weth Token Address")
+  .requiredOption("-amt, --amount <decimal>", "Amount of the token to transfer")
+  .action(async (opts) =>
+    uniswapApproveAndSwapExactETHForTokens(opts.token, opts.routerAddress, opts.weth, opts.amount, Boolean(opts.withPaymaster))
   );
 
 program
