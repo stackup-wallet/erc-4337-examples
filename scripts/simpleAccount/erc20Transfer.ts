@@ -1,14 +1,8 @@
 import { ethers } from "ethers";
-import {
-  ERC20_ABI,
-  getVerifyingPaymaster,
-  getSimpleAccount,
-  getGasFee,
-  printOp,
-  getHttpRpcClient,
-} from "../../src";
+import { ERC20_ABI } from "../../src";
 // @ts-ignore
 import config from "../../config.json";
+import { Client, Presets } from "userop";
 
 export default async function main(
   tkn: string,
@@ -16,18 +10,22 @@ export default async function main(
   amt: string,
   withPM: boolean
 ) {
-  const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
-  const paymasterAPI = withPM
-    ? getVerifyingPaymaster(config.paymasterUrl, config.entryPoint)
+  const paymaster = withPM
+    ? Presets.MiddleWare.verifyingPaymaster(
+        config.paymaster.rpcUrl,
+        config.paymaster.context
+      )
     : undefined;
-  const accountAPI = getSimpleAccount(
-    provider,
+  const simpleAccount = await Presets.Builder.SimpleAccount.init(
     config.signingKey,
+    config.rpcUrl,
     config.entryPoint,
     config.simpleAccountFactory,
-    paymasterAPI
+    paymaster
   );
+  const client = await Client.init(config.rpcUrl, config.entryPoint);
 
+  const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
   const token = ethers.utils.getAddress(tkn);
   const to = ethers.utils.getAddress(t);
   const erc20 = new ethers.Contract(token, ERC20_ABI, provider);
@@ -38,22 +36,21 @@ export default async function main(
   const amount = ethers.utils.parseUnits(amt, decimals);
   console.log(`Transferring ${amt} ${symbol}...`);
 
-  const op = await accountAPI.createSignedUserOp({
-    target: erc20.address,
-    data: erc20.interface.encodeFunctionData("transfer", [to, amount]),
-    ...(await getGasFee(provider)),
-  });
-  console.log(`Signed UserOperation: ${await printOp(op)}`);
-
-  const client = await getHttpRpcClient(
-    provider,
-    config.bundlerUrl,
-    config.entryPoint
+  const res = await client.sendUserOperation(
+    simpleAccount
+      .setVerificationGasLimit(0)
+      .setCallGasLimit(0)
+      .setPreVerificationGas(0)
+      .execute(
+        erc20.address,
+        0,
+        erc20.interface.encodeFunctionData("transfer", [to, amount])
+      ),
+    { onBuild: (op) => console.log("Signed UserOperation:", op) }
   );
-  const uoHash = await client.sendUserOpToBundler(op);
-  console.log(`UserOpHash: ${uoHash}`);
+  console.log(`UserOpHash: ${res.userOpHash}`);
 
   console.log("Waiting for transaction...");
-  const txHash = await accountAPI.getUserOpReceipt(uoHash);
-  console.log(`Transaction hash: ${txHash}`);
+  const ev = await res.wait();
+  console.log(`Transaction hash: ${ev?.transactionHash ?? null}`);
 }

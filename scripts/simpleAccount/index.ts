@@ -3,7 +3,7 @@ import { Command } from "commander";
 import address from "./address";
 import transfer from "./transfer";
 import erc20Transfer from "./erc20Transfer";
-import batchTransfer from "./batchTransfer";
+import erc20Approve from "./erc20Approve";
 import batchErc20Transfer from "./batchErc20Transfer";
 
 const program = new Command();
@@ -42,16 +42,19 @@ program
   );
 
 program
-  .command("batchTransfer")
-  .description("Batch transfer ETH")
+  .command("erc20Approve")
+  .description("Approve spender for ERC-20 token")
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
-  .requiredOption(
-    "-t, --to <addresses>",
-    "Comma separated list of recipient addresses"
-  )
-  .requiredOption("-amt, --amount <eth>", "Amount in ETH to transfer")
+  .requiredOption("-tkn, --token <address>", "The token address")
+  .requiredOption("-s, --spender <address>", "The spender address")
+  .requiredOption("-amt, --amount <decimal>", "Amount of the token to transfer")
   .action(async (opts) =>
-    batchTransfer(opts.to.split(","), opts.amount, Boolean(opts.withPaymaster))
+    erc20Approve(
+      opts.token,
+      opts.spender,
+      opts.amount,
+      Boolean(opts.withPaymaster)
+    )
   );
 
 program
