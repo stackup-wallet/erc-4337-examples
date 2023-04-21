@@ -37,15 +37,11 @@ export default async function main(
   console.log(`Transferring ${amt} ${symbol}...`);
 
   const res = await client.sendUserOperation(
-    simpleAccount
-      .setVerificationGasLimit(0)
-      .setCallGasLimit(0)
-      .setPreVerificationGas(0)
-      .execute(
-        erc20.address,
-        0,
-        erc20.interface.encodeFunctionData("transfer", [to, amount])
-      ),
+    simpleAccount.execute(
+      erc20.address,
+      0,
+      erc20.interface.encodeFunctionData("transfer", [to, amount])
+    ),
     { onBuild: (op) => console.log("Signed UserOperation:", op) }
   );
   console.log(`UserOpHash: ${res.userOpHash}`);
