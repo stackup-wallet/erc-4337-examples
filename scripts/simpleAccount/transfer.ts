@@ -1,46 +1,33 @@
 import { ethers } from "ethers";
-import {
-  getVerifyingPaymaster,
-  getSimpleAccount,
-  getGasFee,
-  printOp,
-  getHttpRpcClient,
-} from "../../src";
+import { Client, Presets } from "userop";
 // @ts-ignore
 import config from "../../config.json";
 
 export default async function main(t: string, amt: string, withPM: boolean) {
-  const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
-  const paymasterAPI = withPM
-    ? getVerifyingPaymaster(config.paymasterUrl, config.entryPoint)
+  const paymaster = withPM
+    ? Presets.Middleware.verifyingPaymaster(
+        config.paymaster.rpcUrl,
+        config.paymaster.context
+      )
     : undefined;
-  const accountAPI = getSimpleAccount(
-    provider,
+  const simpleAccount = await Presets.Builder.SimpleAccount.init(
     config.signingKey,
+    config.rpcUrl,
     config.entryPoint,
     config.simpleAccountFactory,
-    paymasterAPI
+    paymaster
   );
+  const client = await Client.init(config.rpcUrl, config.entryPoint);
 
   const target = ethers.utils.getAddress(t);
   const value = ethers.utils.parseEther(amt);
-  const op = await accountAPI.createSignedUserOp({
-    target,
-    value,
-    data: "0x",
-    ...(await getGasFee(provider)),
-  });
-  console.log(`Signed UserOperation: ${await printOp(op)}`);
-
-  const client = await getHttpRpcClient(
-    provider,
-    config.bundlerUrl,
-    config.entryPoint
+  const res = await client.sendUserOperation(
+    simpleAccount.execute(target, value, "0x"),
+    { onBuild: (op) => console.log("Signed UserOperation:", op) }
   );
-  const uoHash = await client.sendUserOpToBundler(op);
-  console.log(`UserOpHash: ${uoHash}`);
+  console.log(`UserOpHash: ${res.userOpHash}`);
 
   console.log("Waiting for transaction...");
-  const txHash = await accountAPI.getUserOpReceipt(uoHash);
-  console.log(`Transaction hash: ${txHash}`);
+  const ev = await res.wait();
+  console.log(`Transaction hash: ${ev?.transactionHash ?? null}`);
 }

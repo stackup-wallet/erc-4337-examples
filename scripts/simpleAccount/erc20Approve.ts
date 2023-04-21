@@ -1,12 +1,12 @@
 import { ethers } from "ethers";
+import { Client, Presets } from "userop";
 import { ERC20_ABI } from "../../src";
 // @ts-ignore
 import config from "../../config.json";
-import { Client, Presets } from "userop";
 
 export default async function main(
   tkn: string,
-  t: string,
+  s: string,
   amt: string,
   withPM: boolean
 ) {
@@ -27,20 +27,20 @@ export default async function main(
 
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
   const token = ethers.utils.getAddress(tkn);
-  const to = ethers.utils.getAddress(t);
+  const spender = ethers.utils.getAddress(s);
   const erc20 = new ethers.Contract(token, ERC20_ABI, provider);
   const [symbol, decimals] = await Promise.all([
     erc20.symbol(),
     erc20.decimals(),
   ]);
   const amount = ethers.utils.parseUnits(amt, decimals);
-  console.log(`Transferring ${amt} ${symbol}...`);
+  console.log(`Approving ${amt} ${symbol}...`);
 
   const res = await client.sendUserOperation(
     simpleAccount.execute(
       erc20.address,
       0,
-      erc20.interface.encodeFunctionData("transfer", [to, amount])
+      erc20.interface.encodeFunctionData("approve", [spender, amount])
     ),
     { onBuild: (op) => console.log("Signed UserOperation:", op) }
   );

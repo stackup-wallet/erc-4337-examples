@@ -1,12 +1,6 @@
 import { ethers } from "ethers";
-import {
-  ERC20_ABI,
-  getVerifyingPaymaster,
-  getSimpleAccount,
-  getGasFee,
-  printOp,
-  getHttpRpcClient,
-} from "../../src";
+import { Client, Presets } from "userop";
+import { ERC20_ABI } from "../../src";
 // @ts-ignore
 import config from "../../config.json";
 
@@ -22,19 +16,22 @@ export default async function main(
   amt: string,
   withPM: boolean
 ) {
-  const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
-  const paymasterAPI = withPM
-    ? getVerifyingPaymaster(config.paymasterUrl, config.entryPoint)
+  const paymaster = withPM
+    ? Presets.Middleware.verifyingPaymaster(
+        config.paymaster.rpcUrl,
+        config.paymaster.context
+      )
     : undefined;
-  const accountAPI = getSimpleAccount(
-    provider,
+  const simpleAccount = await Presets.Builder.SimpleAccount.init(
     config.signingKey,
+    config.rpcUrl,
     config.entryPoint,
     config.simpleAccountFactory,
-    paymasterAPI
+    paymaster
   );
-  const sender = await accountAPI.getCounterFactualAddress();
+  const client = await Client.init(config.rpcUrl, config.entryPoint);
 
+  const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
   const token = ethers.utils.getAddress(tkn);
   const erc20 = new ethers.Contract(token, ERC20_ABI, provider);
   const [symbol, decimals] = await Promise.all([
@@ -59,23 +56,13 @@ export default async function main(
     `Batch transferring ${amt} ${symbol} to ${dest.length} recipients...`
   );
 
-  const ac = await accountAPI._getAccountContract();
-  const op = await accountAPI.createSignedUserOp({
-    target: sender,
-    data: ac.interface.encodeFunctionData("executeBatch", [dest, data]),
-    ...(await getGasFee(provider)),
-  });
-  console.log(`Signed UserOperation: ${await printOp(op)}`);
-
-  const client = await getHttpRpcClient(
-    provider,
-    config.bundlerUrl,
-    config.entryPoint
+  const res = await client.sendUserOperation(
+    simpleAccount.executeBatch(dest, data),
+    { onBuild: (op) => console.log("Signed UserOperation:", op) }
   );
-  const uoHash = await client.sendUserOpToBundler(op);
-  console.log(`UserOpHash: ${uoHash}`);
+  console.log(`UserOpHash: ${res.userOpHash}`);
 
   console.log("Waiting for transaction...");
-  const txHash = await accountAPI.getUserOpReceipt(uoHash);
-  console.log(`Transaction hash: ${txHash}`);
+  const ev = await res.wait();
+  console.log(`Transaction hash: ${ev?.transactionHash ?? null}`);
 }

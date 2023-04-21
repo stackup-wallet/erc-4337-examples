@@ -1,17 +1,15 @@
-import { getSimpleAccount } from "../../src";
-import { ethers } from "ethers";
+import { Presets } from "userop";
 // @ts-ignore
 import config from "../../config.json";
 
 export default async function main() {
-  const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
-  const accountAPI = getSimpleAccount(
-    provider,
+  const simpleAccount = await Presets.Builder.SimpleAccount.init(
     config.signingKey,
+    config.rpcUrl,
     config.entryPoint,
     config.simpleAccountFactory
   );
-  const address = await accountAPI.getCounterFactualAddress();
+  const address = simpleAccount.getSender();
 
   console.log(`SimpleAccount address: ${address}`);
 }

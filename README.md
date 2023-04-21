@@ -4,24 +4,28 @@
 
 A collection of example scripts for working with ERC-4337. For an overview on the EIP and account abstraction, see our docs [here](https://docs.stackup.sh/).
 
-All scripts in this repository is built using [@account-abstraction/sdk](https://www.npmjs.com/package/@account-abstraction/sdk). The implementation of all the following commands are located in the [scripts directory](./scripts/).
+The implementation for all commands are located in the [scripts directory](./scripts/). All scripts are built with the following libraries:
+
+- Sample contracts: [eth-infinitism/account-abstraction](https://github.com/eth-infinitism/account-abstraction)
+- JS SDK: [userop.js](https://github.com/stackup-wallet/userop.js)
+
+> **🚀 Looking for access to hosted infrastructure to build your Smart Accounts? Check out [stackup.sh](https://www.stackup.sh/)!**
 
 ## Table of contents
 
 - [Setup](#setup)
   - [Init config](#init-config)
-    - [`bundlerUrl`](#bundlerurl)
     - [`rpcUrl`](#rpcurl)
     - [`signingKey`](#signingkey)
     - [`entryPoint`](#entrypoint)
     - [`simpleAccountFactory`](#simpleaccountfactory)
-    - [`paymasterUrl`](#verifyingpaymasterurl)
+    - [`paymaster`](#paymaster)
 - [Commands](#commands)
   - [Simple Account](#simple-account)
     - [Get account address](#get-account-address)
     - [Transfer ETH](#transfer-eth)
     - [Transfer ERC-20 token](#transfer-erc-20-token)
-    - [Batch transfer ETH](#batch-transfer-eth)
+    - [Approve ERC-20 token](#approve-erc-20-token)
     - [Batch transfer ERC-20 token](#batch-transfer-erc-20-token)
 - [License](#license)
 - [Contact](#contact)
@@ -48,19 +52,11 @@ These config values will be used for all documented [commands](#commands).
 yarn run init
 ```
 
-### `bundlerUrl`
-
-**Default value is set to `http://localhost:4337`.**
-
-All UserOperations are required to be sent to a bundler. This field specifies the URL for the bundler you want to use.
-
-You can run a self-hosted instance with [stackup-bundler](https://github.com/stackup-wallet/stackup-bundler). **Fully managed instances are also available. If you would like one setup, come [talk to us](https://discord.gg/FpXmvKrNed)!**
-
 ### `rpcUrl`
 
-**Default value is set to `http://localhost:8545`.**
+**Default value is set to `https://api.stackup.sh/v1/node/API_KEY`.**
 
-This is a standard RPC URL for an ethereum node. By default it uses the public RPC for Polygon mumbai testnet. You can change this to any network you like.
+This is a standard RPC URL for an ethereum node that also supports all [ERC-4337 bundler methods](https://github.com/eth-infinitism/account-abstraction/blob/develop/eip/EIPS/eip-4337.md#rpc-methods-eth-namespace). By default it uses the stackup endpoint. You will need to fill in your API key from the [Stackup dashboard](https://app.stackup.sh/sign-in). Alternatively you can also use any RPC url that is also enabled as a bundler.
 
 ### `signingKey`
 
@@ -70,23 +66,31 @@ All UserOperations have a `signature` field which smart contract accounts will u
 
 ### `entryPoint`
 
-**Default value is set to `0x0576a174D229E3cFA37253523E645A78A0C91B57`.**
+**Default value is set to `0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789`.**
 
 This is address of the singleton EntryPoint contract. It is the same on all networks.
 
 ### `simpleAccountFactory`
 
-**Default value is set to `0x71D63edCdA95C61D6235552b5Bc74E32d8e2527B`.**
+**Default value is set to `0x9406Cc6185a346906296840746125a0E44976454`.**
 
 This is the factory address for deploying [SimpleAccount.sol](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/samples/SimpleAccount.sol). It is the same on all networks and allows us to generate deterministic addresses.
 
-_The default factory deploys a [forked version of `SimpleAccount.sol`](https://github.com/hazim-j/account-abstraction/blob/7f31abdd702772890a6633af70e1598e23f9b177/contracts/samples/SimpleAccount.sol#L98) with a one line change to make calling batched transactions easier._
+### `paymaster`
 
-### `paymasterUrl`
+This is an object with fields related to a paymaster entity.
 
-**Default value is an empty string.**
+#### `rpcUrl`
+
+**Default value is set to `https://api.stackup.sh/v1/paymaster/API_KEY`**
 
 This field specifies the URL to request paymaster approval when using the `--withPaymaster` flag. The examples assume that any paymaster service follows the interface specified [here](https://docs.stackup.sh/docs/api/paymaster/rpc-methods).
+
+#### `context`
+
+**Default value is an empty object.**
+
+This arbitrary object is passed as the last parameter when calling `pm_sponsorUserOperation`. It's content will depend on the the specific paymaster you're interacting with.
 
 # Commands
 
@@ -100,7 +104,7 @@ All commands below can be augmented with the following flags.
 
 ### With Paymaster
 
-Appending `--withPaymaster` to any command will send UserOperations to the `paymasterUrl` specified in the config for approval. If successful, gas for this transaction will be paid for by the paymaster.
+Appending `--withPaymaster` will call `pm_sponsorUserOperation` on `paymaster.rpcUrl` with the UserOperation, EntryPoint, and `paymaster.context`. If successful, gas for this transaction will be paid for by the paymaster.
 
 Example:
 
@@ -150,14 +154,12 @@ If not using a paymaster, make sure to also have enough ETH to pay gas fees.
 yarn run simpleAccount erc20Transfer --token <address> --to <address> --amount <decimal>
 ```
 
-### Batch transfer ETH
+### Approve ERC-20 token
 
-This example shows how we can do multiple atomic ETH transfers in a single transaction.
+If not using a paymaster, make sure to also have enough ETH to pay gas fees.
 
 ```bash
-# recipient addresses is comma separated.
-# e.g. 0x123..abc,0x456...def
-yarn run simpleAccount batchTransfer --to <addresses> --amount <eth>
+yarn run simpleAccount erc20Approve --token <address> --spender <address> --amount <decimal>
 ```
 
 ### Batch transfer ERC-20 token
