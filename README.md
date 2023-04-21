@@ -164,7 +164,7 @@ yarn run simpleAccount erc20Approve --token <address> --spender <address> --amou
 
 ### Batch transfer ERC-20 token
 
-Similar to `simpleAccount batchTransfer`, we can also do multiple atomic contract interactions in a single transaction. This example shows us how with an ERC-20 token.
+This command allows you to do multiple atomic contract interactions in a single transaction. The example shows us how with an ERC-20 token.
 
 ```bash
 # recipient addresses is comma separated.
