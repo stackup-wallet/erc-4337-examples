@@ -11,7 +11,7 @@ export default async function main(
   withPM: boolean
 ) {
   const paymaster = withPM
-    ? Presets.MiddleWare.verifyingPaymaster(
+    ? Presets.Middleware.verifyingPaymaster(
         config.paymaster.rpcUrl,
         config.paymaster.context
       )

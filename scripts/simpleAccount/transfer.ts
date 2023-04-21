@@ -5,7 +5,7 @@ import config from "../../config.json";
 
 export default async function main(t: string, amt: string, withPM: boolean) {
   const paymaster = withPM
-    ? Presets.MiddleWare.verifyingPaymaster(
+    ? Presets.Middleware.verifyingPaymaster(
         config.paymaster.rpcUrl,
         config.paymaster.context
       )
