@@ -1504,10 +1504,10 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-userop@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/userop/-/userop-0.1.3.tgz#80e8cc3d04e40bada6299cbe9d1eb607232ac304"
-  integrity sha512-Q315W/sxpBIi1tDtPhHQfwjtnFuzXZGEn7XVnGf1/zSODJya1teqDaJr0FWHT+yCK8TO3P0PjdiTkhouGnyH8g==
+userop@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/userop/-/userop-0.1.5.tgz#67df48bfc8b247ef6d2d13eb669720b79445a1f9"
+  integrity sha512-86t/MzOCoAXTGw6n+5bzys6vqbRTn8loVe4iZ0bIHD9YIYzuLLTWqr+MPHar786cIpwIEIuwDIZARchHqj6nYg==
   dependencies:
     ethers "^5.7.2"
 
