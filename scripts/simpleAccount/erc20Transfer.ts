@@ -3,14 +3,15 @@ import { ERC20_ABI } from "../../src";
 // @ts-ignore
 import config from "../../config.json";
 import { Client, Presets } from "userop";
+import { CLIOpts } from "../../src";
 
 export default async function main(
   tkn: string,
   t: string,
   amt: string,
-  withPM: boolean
+  opts: CLIOpts
 ) {
-  const paymaster = withPM
+  const paymaster = opts.withPM
     ? Presets.Middleware.verifyingPaymaster(
         config.paymaster.rpcUrl,
         config.paymaster.context
@@ -42,7 +43,10 @@ export default async function main(
       0,
       erc20.interface.encodeFunctionData("transfer", [to, amount])
     ),
-    { onBuild: (op) => console.log("Signed UserOperation:", op) }
+    {
+      dryRun: opts.dryRun,
+      onBuild: (op) => console.log("Signed UserOperation:", op),
+    }
   );
   console.log(`UserOpHash: ${res.userOpHash}`);
 

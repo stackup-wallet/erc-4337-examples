@@ -1,10 +1,11 @@
 import { ethers } from "ethers";
 import { Client, Presets } from "userop";
+import { CLIOpts } from "../../src";
 // @ts-ignore
 import config from "../../config.json";
 
-export default async function main(t: string, amt: string, withPM: boolean) {
-  const paymaster = withPM
+export default async function main(t: string, amt: string, opts: CLIOpts) {
+  const paymaster = opts.withPM
     ? Presets.Middleware.verifyingPaymaster(
         config.paymaster.rpcUrl,
         config.paymaster.context
@@ -23,7 +24,10 @@ export default async function main(t: string, amt: string, withPM: boolean) {
   const value = ethers.utils.parseEther(amt);
   const res = await client.sendUserOperation(
     simpleAccount.execute(target, value, "0x"),
-    { onBuild: (op) => console.log("Signed UserOperation:", op) }
+    {
+      dryRun: opts.dryRun,
+      onBuild: (op) => console.log("Signed UserOperation:", op),
+    }
   );
   console.log(`UserOpHash: ${res.userOpHash}`);
 

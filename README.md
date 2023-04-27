@@ -102,6 +102,10 @@ The location of each script mimics the command structure. For example `yarn run 
 
 All commands below can be augmented with the following flags.
 
+### Dry run
+
+Appending `--dryRun` will go through the whole process of making a UserOperation, but will not call `eth_sendUserOperation`. This is useful for debugging purposes to see what the final UserOperation looks like.
+
 ### With Paymaster
 
 Appending `--withPaymaster` will call `pm_sponsorUserOperation` on `paymaster.rpcUrl` with the UserOperation, EntryPoint, and `paymaster.context`. If successful, gas for this transaction will be paid for by the paymaster.
