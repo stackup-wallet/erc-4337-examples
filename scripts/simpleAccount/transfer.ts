@@ -12,7 +12,7 @@ export default async function main(t: string, amt: string, opts: CLIOpts) {
       )
     : undefined;
   const simpleAccount = await Presets.Builder.SimpleAccount.init(
-    config.signingKey,
+    new ethers.Wallet(config.signingKey),
     config.rpcUrl,
     config.entryPoint,
     config.simpleAccountFactory,
