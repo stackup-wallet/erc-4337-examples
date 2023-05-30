@@ -2,7 +2,7 @@
 
 # Getting started
 
-A collection of example scripts for working with ERC-4337. **For details on how to use this repository, see [docs.stackup.sh/docs/erc-4337-examples](https://docs.stackup.sh/docs/erc-4337-examples).**
+A collection of example scripts for working with ERC-4337. **For details on how to use this repository, [check out the docs here](https://docs.stackup.sh/docs/erc-4337-examples).**
 
 The implementation for all commands are located in the [scripts directory](./scripts/). All scripts are built with the following open source packages:
 
