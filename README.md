@@ -7,6 +7,7 @@ A collection of example scripts for working with ERC-4337. **For details on how 
 The implementation for all commands are located in the [scripts directory](./scripts/). All scripts are built with the following open source packages:
 
 - Sample contracts: [eth-infinitism/account-abstraction](https://github.com/eth-infinitism/account-abstraction)
+- ZeroDev Kernel contracts: [zerodevapp/kernel](https://github.com/zerodevapp/kernel)
 - JS SDK: [userop.js](https://github.com/stackup-wallet/userop.js)
 
 > **🚀 Looking for access to hosted infrastructure to build your Smart Accounts? Check out [stackup.sh](https://www.stackup.sh/)!**

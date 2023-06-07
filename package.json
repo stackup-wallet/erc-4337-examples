@@ -10,13 +10,15 @@
     "prettier": "prettier --check --ignore-path ./.eslintignore '**'",
     "prettier:fix": "prettier --write --ignore-path ./.eslintignore '**'",
     "init": "ts-node scripts/init.ts",
+    "kernel": "ts-node scripts/kernel/index.ts",
     "simpleAccount": "ts-node scripts/simpleAccount/index.ts"
   },
   "dependencies": {
+    "@inquirer/prompts": "^2.0.0",
     "axios": "^1.2.3",
     "commander": "^10.0.0",
     "ethers": "^5.7.2",
-    "userop": "^0.2.0"
+    "userop": "^0.3.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",

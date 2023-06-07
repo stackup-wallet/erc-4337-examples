@@ -16,7 +16,7 @@ export default async function main(
   amt: string,
   opts: CLIOpts
 ) {
-  const paymaster = opts.withPM
+  const paymasterMiddleware = opts.withPM
     ? Presets.Middleware.verifyingPaymaster(
         config.paymaster.rpcUrl,
         config.paymaster.context
@@ -25,11 +25,9 @@ export default async function main(
   const simpleAccount = await Presets.Builder.SimpleAccount.init(
     new ethers.Wallet(config.signingKey),
     config.rpcUrl,
-    config.entryPoint,
-    config.simpleAccountFactory,
-    paymaster
+    { paymasterMiddleware }
   );
-  const client = await Client.init(config.rpcUrl, config.entryPoint);
+  const client = await Client.init(config.rpcUrl);
 
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
   const token = ethers.utils.getAddress(tkn);
