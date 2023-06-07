@@ -4,11 +4,11 @@ import { Presets } from "userop";
 import config from "../../config.json";
 
 export default async function main() {
-  const simpleAccount = await Presets.Builder.SimpleAccount.init(
+  const kernel = await Presets.Builder.Kernel.init(
     new ethers.Wallet(config.signingKey),
     config.rpcUrl
   );
-  const address = simpleAccount.getSender();
+  const address = kernel.getSender();
 
-  console.log(`SimpleAccount address: ${address}`);
+  console.log(`Kernel address: ${address}`);
 }

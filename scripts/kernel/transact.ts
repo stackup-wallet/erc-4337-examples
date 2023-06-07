@@ -1,27 +1,30 @@
-import { ethers } from "ethers";
 import { Client, Presets } from "userop";
-import { CLIOpts } from "../../src";
+import { ethers } from "ethers";
+import { CLIOpts, createCalls } from "../../src";
 // @ts-ignore
 import config from "../../config.json";
 
-export default async function main(t: string, amt: string, opts: CLIOpts) {
+export default async function main(opts: CLIOpts): Promise<void> {
+  const calls = await createCalls(
+    new ethers.providers.JsonRpcProvider(config.rpcUrl)
+  );
+
+  console.log(`Building UserOperation...`);
   const paymasterMiddleware = opts.withPM
     ? Presets.Middleware.verifyingPaymaster(
         config.paymaster.rpcUrl,
         config.paymaster.context
       )
     : undefined;
-  const simpleAccount = await Presets.Builder.SimpleAccount.init(
+  const kernel = await Presets.Builder.Kernel.init(
     new ethers.Wallet(config.signingKey),
     config.rpcUrl,
     { paymasterMiddleware }
   );
   const client = await Client.init(config.rpcUrl);
 
-  const target = ethers.utils.getAddress(t);
-  const value = ethers.utils.parseEther(amt);
   const res = await client.sendUserOperation(
-    simpleAccount.execute(target, value, "0x"),
+    calls.length === 1 ? kernel.execute(calls[0]) : kernel.executeBatch(calls),
     {
       dryRun: opts.dryRun,
       onBuild: (op) => console.log("Signed UserOperation:", op),
