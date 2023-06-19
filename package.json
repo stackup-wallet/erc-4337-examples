@@ -18,7 +18,7 @@
     "axios": "^1.2.3",
     "commander": "^10.0.0",
     "ethers": "^5.7.2",
-    "userop": "^0.3.0"
+    "userop": "^0.3.1"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
