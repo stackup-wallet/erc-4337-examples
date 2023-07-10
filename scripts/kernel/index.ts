@@ -27,7 +27,7 @@ program
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
   .option(
     "-b, --overrideBundlerRpc <url>",
-    "Route all bundler RPC method calls to a separate RPC URL"
+    "Route all bundler RPC method calls to a separate URL"
   )
   .action(async (opts) =>
     transact({

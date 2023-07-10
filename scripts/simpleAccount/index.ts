@@ -30,7 +30,7 @@ program
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
   .option(
     "-b, --overrideBundlerRpc <url>",
-    "Route all bundler RPC method calls to a separate RPC URL"
+    "Route all bundler RPC method calls to a separate URL"
   )
   .requiredOption("-t, --to <address>", "The recipient address")
   .requiredOption("-amt, --amount <eth>", "Amount in ETH to transfer")
@@ -52,7 +52,7 @@ program
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
   .option(
     "-b, --overrideBundlerRpc <url>",
-    "Route all bundler RPC method calls to a separate RPC URL"
+    "Route all bundler RPC method calls to a separate URL"
   )
   .requiredOption("-tkn, --token <address>", "The token address")
   .requiredOption("-t, --to <address>", "The recipient address")
@@ -75,7 +75,7 @@ program
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
   .option(
     "-b, --overrideBundlerRpc <url>",
-    "Route all bundler RPC method calls to a separate RPC URL"
+    "Route all bundler RPC method calls to a separate URL"
   )
   .requiredOption("-tkn, --token <address>", "The token address")
   .requiredOption("-s, --spender <address>", "The spender address")
@@ -98,7 +98,7 @@ program
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
   .option(
     "-b, --overrideBundlerRpc <url>",
-    "Route all bundler RPC method calls to a separate RPC URL"
+    "Route all bundler RPC method calls to a separate URL"
   )
   .requiredOption("-tkn, --token <address>", "The token address")
   .requiredOption(
