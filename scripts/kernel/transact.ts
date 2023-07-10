@@ -19,9 +19,11 @@ export default async function main(opts: CLIOpts): Promise<void> {
   const kernel = await Presets.Builder.Kernel.init(
     new ethers.Wallet(config.signingKey),
     config.rpcUrl,
-    { paymasterMiddleware }
+    { paymasterMiddleware, overrideBundlerRpc: opts.overrideBundlerRpc }
   );
-  const client = await Client.init(config.rpcUrl);
+  const client = await Client.init(config.rpcUrl, {
+    overrideBundlerRpc: opts.overrideBundlerRpc,
+  });
 
   const res = await client.sendUserOperation(
     calls.length === 1 ? kernel.execute(calls[0]) : kernel.executeBatch(calls),
