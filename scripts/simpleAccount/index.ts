@@ -28,12 +28,17 @@ program
     "Builds the UserOperation without calling eth_sendUserOperation"
   )
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
+  .option(
+    "-b, --overrideBundlerRpc <url>",
+    "Route all bundler RPC method calls to a separate URL"
+  )
   .requiredOption("-t, --to <address>", "The recipient address")
   .requiredOption("-amt, --amount <eth>", "Amount in ETH to transfer")
   .action(async (opts) =>
     transfer(opts.to, opts.amount, {
       dryRun: Boolean(opts.dryRun),
       withPM: Boolean(opts.withPaymaster),
+      overrideBundlerRpc: opts.overrideBundlerRpc,
     })
   );
 
@@ -45,6 +50,10 @@ program
     "Builds the UserOperation without calling eth_sendUserOperation"
   )
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
+  .option(
+    "-b, --overrideBundlerRpc <url>",
+    "Route all bundler RPC method calls to a separate URL"
+  )
   .requiredOption("-tkn, --token <address>", "The token address")
   .requiredOption("-t, --to <address>", "The recipient address")
   .requiredOption("-amt, --amount <decimal>", "Amount of the token to transfer")
@@ -52,6 +61,7 @@ program
     erc20Transfer(opts.token, opts.to, opts.amount, {
       dryRun: Boolean(opts.dryRun),
       withPM: Boolean(opts.withPaymaster),
+      overrideBundlerRpc: opts.overrideBundlerRpc,
     })
   );
 
@@ -63,6 +73,10 @@ program
     "Builds the UserOperation without calling eth_sendUserOperation"
   )
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
+  .option(
+    "-b, --overrideBundlerRpc <url>",
+    "Route all bundler RPC method calls to a separate URL"
+  )
   .requiredOption("-tkn, --token <address>", "The token address")
   .requiredOption("-s, --spender <address>", "The spender address")
   .requiredOption("-amt, --amount <decimal>", "Amount of the token to transfer")
@@ -70,6 +84,7 @@ program
     erc20Approve(opts.token, opts.spender, opts.amount, {
       dryRun: Boolean(opts.dryRun),
       withPM: Boolean(opts.withPaymaster),
+      overrideBundlerRpc: opts.overrideBundlerRpc,
     })
   );
 
@@ -81,6 +96,10 @@ program
     "Builds the UserOperation without calling eth_sendUserOperation"
   )
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
+  .option(
+    "-b, --overrideBundlerRpc <url>",
+    "Route all bundler RPC method calls to a separate URL"
+  )
   .requiredOption("-tkn, --token <address>", "The token address")
   .requiredOption(
     "-t, --to <addresses>",
@@ -91,6 +110,7 @@ program
     batchErc20Transfer(opts.token, opts.to.split(","), opts.amount, {
       dryRun: Boolean(opts.dryRun),
       withPM: Boolean(opts.withPaymaster),
+      overrideBundlerRpc: opts.overrideBundlerRpc,
     })
   );
 

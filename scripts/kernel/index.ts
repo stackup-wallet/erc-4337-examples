@@ -25,10 +25,15 @@ program
     "Builds the UserOperation without calling eth_sendUserOperation"
   )
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
+  .option(
+    "-b, --overrideBundlerRpc <url>",
+    "Route all bundler RPC method calls to a separate URL"
+  )
   .action(async (opts) =>
     transact({
       dryRun: Boolean(opts.dryRun),
       withPM: Boolean(opts.withPaymaster),
+      overrideBundlerRpc: opts.overrideBundlerRpc,
     })
   );
 
