@@ -11,11 +11,27 @@ export default async function main(t: string, amt: string, opts: CLIOpts) {
         config.paymaster.context
       )
     : undefined;
+
   const simpleAccount = await Presets.Builder.SimpleAccount.init(
     new ethers.Wallet(config.signingKey),
     config.rpcUrl,
     { paymasterMiddleware, overrideBundlerRpc: opts.overrideBundlerRpc }
   );
+  const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
+  simpleAccount
+    .resetMiddleware()
+    .useMiddleware(Presets.Middleware.getGasPrice(provider))
+    .useMiddleware(
+      Presets.Middleware.EOASignature(new ethers.Wallet(config.signingKey))
+    )
+    .setCallGasLimit(1500000)
+    .setPreVerificationGas(1500000)
+    .setVerificationGasLimit(1500000)
+
+    .setInitCode(
+      "0x9406cc6185a346906296840746125a0e449764545fbfb9cf000000000000000000000000f4d69e0a356e652fd8dae476589777ae7f67f9ec0000000000000000000000000000000000000000000000000000000000000000"
+    );
+
   const client = await Client.init(config.rpcUrl, {
     overrideBundlerRpc: opts.overrideBundlerRpc,
   });
