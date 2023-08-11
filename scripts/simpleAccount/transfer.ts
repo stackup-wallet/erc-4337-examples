@@ -3,6 +3,7 @@ import { Client, Presets } from "userop";
 import { CLIOpts } from "../../src";
 // @ts-ignore
 import config from "../../config.json";
+import { SimpleAccount } from "../../src/DFKSimpleAccount";
 
 export default async function main(t: string, amt: string, opts: CLIOpts) {
   const paymasterMiddleware = opts.withPM
@@ -11,7 +12,7 @@ export default async function main(t: string, amt: string, opts: CLIOpts) {
         config.paymaster.context
       )
     : undefined;
-  const simpleAccount = await Presets.Builder.SimpleAccount.init(
+  const simpleAccount = await SimpleAccount.init(
     new ethers.Wallet(config.signingKey),
     config.rpcUrl,
     { paymasterMiddleware, overrideBundlerRpc: opts.overrideBundlerRpc }
