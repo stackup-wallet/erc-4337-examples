@@ -1,8 +1,7 @@
 import { ethers } from "ethers";
-import { Presets } from "userop";
+import { SimpleAccount } from "../../src/DFKSimpleAccount";
 // @ts-ignore
 import config from "../../config.json";
-import { SimpleAccount } from "../../src/DFKSimpleAccount";
 
 export default async function main() {
   const simpleAccount = await SimpleAccount.init(

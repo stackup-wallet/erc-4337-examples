@@ -1,9 +1,9 @@
 import { ethers } from "ethers";
 import { Client, Presets } from "userop";
+import { SimpleAccount } from "../../src/DFKSimpleAccount";
 import { CLIOpts } from "../../src";
 // @ts-ignore
 import config from "../../config.json";
-import { SimpleAccount } from "../../src/DFKSimpleAccount";
 
 export default async function main(t: string, amt: string, opts: CLIOpts) {
   const paymasterMiddleware = opts.withPM
