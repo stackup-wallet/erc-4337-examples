@@ -39,7 +39,7 @@ export class ERC20Quotes {
   private pref: string;
   private provider: ethers.providers.JsonRpcProvider;
 
-  private approveCallData = async (spender: string, token: Token) => {
+  private approveCallData = (spender: string, token: Token) => {
     const erc20 = new ethers.Contract(token.address, ERC20_ABI);
     return erc20.interface.encodeFunctionData("approve", [
       spender,
@@ -77,11 +77,11 @@ export class ERC20Quotes {
     ])) as Array<string>;
 
     const quotesReq = await Promise.all(
-      this.tokens.map(async (token) => ({
+      this.tokens.map((token) => ({
         token: token.address,
         callData: this.callDataFn(
           token.address,
-          await this.approveCallData(accounts[0], token)
+          this.approveCallData(accounts[0], token)
         ),
       }))
     );
