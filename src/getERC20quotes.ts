@@ -1,4 +1,4 @@
-import { BigNumberish, Bytes, BytesLike, ethers } from "ethers";
+import { BigNumberish, BytesLike, ethers } from "ethers";
 import { UserOperationMiddlewareCtx, Utils, Constants } from "userop";
 import { ERC20_ABI } from "./abi";
 
