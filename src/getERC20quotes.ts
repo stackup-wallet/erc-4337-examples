@@ -34,7 +34,10 @@ interface GetERC20TokenQuotesResponse {
 }
 
 export class ERC20Quotes {
-  private callDataFn: (address: string, approveData: BytesLike) => BytesLike;
+  private callDataForToken: (
+    address: string,
+    approveData: BytesLike
+  ) => BytesLike;
   private tokens: Array<Token>;
   private pref: string;
   private provider: ethers.providers.JsonRpcProvider;
@@ -49,7 +52,7 @@ export class ERC20Quotes {
 
   constructor(paymasterRpc: string) {
     this.provider = new ethers.providers.JsonRpcProvider(paymasterRpc);
-    this.callDataFn = () => "0x";
+    this.callDataForToken = () => "0x";
     this.tokens = [];
     this.pref = "";
   }
@@ -64,10 +67,10 @@ export class ERC20Quotes {
     return this;
   };
 
-  setCallDataFn = (
+  setCallDataForToken = (
     fn: (address: string, approveData: BytesLike) => BytesLike
   ): ERC20Quotes => {
-    this.callDataFn = fn;
+    this.callDataForToken = fn;
     return this;
   };
 
@@ -79,7 +82,7 @@ export class ERC20Quotes {
     const quotesReq = await Promise.all(
       this.tokens.map((token) => ({
         token: token.address,
-        callData: this.callDataFn(
+        callData: this.callDataForToken(
           token.address,
           this.approveCallData(accounts[0], token)
         ),
