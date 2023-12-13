@@ -1,10 +1,10 @@
 import { ethers } from "ethers";
-import { Presets } from "userop";
+import { SimpleAccount } from "../../src/DFKSimpleAccount";
 // @ts-ignore
 import config from "../../config.json";
 
 export default async function main() {
-  const simpleAccount = await Presets.Builder.SimpleAccount.init(
+  const simpleAccount = await SimpleAccount.init(
     new ethers.Wallet(config.signingKey),
     config.rpcUrl
   );
